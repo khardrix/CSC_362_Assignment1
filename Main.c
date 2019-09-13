@@ -29,9 +29,13 @@
 
 int main() {
 	/* --------------------------------------- VARIABLE DECLARATIONS ---------------------------------------- */
-	// Character Array variables to store the file names
+	// Character Pointer variables to store the file names
 	char* fileName1 = "file2a.txt";
 	char* fileName2 = "file2b.txt";
+
+	// Character Pointer variables to store strings for use in final output
+	char* sensitiveOutput = "";
+	char* letterOutput = "";
 	
 	// File Pointer variables 
 	FILE* fileInput1;
@@ -117,6 +121,9 @@ int main() {
 		/* ----- TESTING FOR MATCHES, MISMATCHES AND NOT TESTED BASED UPON USER DEFINED TEST CONDITIONS ----- */
 		// if statement that checks if the user wants to check only letters
 		if (onlyLetters == 'y' || onlyLetters == 'Y') {
+			// store "letters only" for use in final output in the Character Pointer variable letterOutput
+			letterOutput = "letters only";
+
 			// if statement that checks if the Charcter variable readC1 is not an alphabetical Character
 			if (isalpha(readC1) == 0) {
 				// increment the notTestedCounter variable
@@ -126,6 +133,9 @@ int main() {
 			else {
 				// if statement that checks if the user wants the alphabetical comparisons to be case sensitive
 				if (sensitive == 'y' || sensitive == 'Y') {
+					// store "sensitivity" for use in final output in the Character Pointer variable sensitiveOutput
+					sensitiveOutput = "sensitivity";
+
 					// if statement that checks if the Characters variable readC1 is lowercase and
 						// the Character variable readC2 is uppercase
 					if ( ((isupper(readC1) == 0) && (isupper(readC2) != 0)) ) {
@@ -158,6 +168,9 @@ int main() {
 				// else statement that executes on alphabetical Character variables readC1 and
 					// readC2 if their case (upper or lower) does not matter 
 				else {
+					// store "insensitivity" for use in final output in the Character Pointer variable sensitiveOutput
+					sensitiveOutput = "insensitivity";
+
 					// if statement that converts the Character variables readC1 and readC2 to
 						// lowercase and then compares them to see if they are the same
 					if (tolower(readC1) == tolower(readC2)) {
@@ -175,6 +188,9 @@ int main() {
 		}
 		// else statement that executes if Characters that are not alphabetical are going to be compared
 		else {
+			// store "letters and characters" for use in final output in the Character Pointer variable letterOutput
+			letterOutput = "letters and characters";
+
 			// if statement that checks if the Character variables readC1 and readC2 are the same
 			if (readC1 == readC2) {
 				// increment the sameCounter variable
@@ -206,12 +222,14 @@ int main() {
 	printf("\n\n\n\nCase sensitive? (Y/N) %c\n", sensitive);
 	// print whether the user wanted to compare letters only
 	printf("Compare letters only? (Y/N) %c\n\n", onlyLetters);
+	// print the information about the files being compared and how they are being compared
+	printf("Comparing %s to %s testing for case %s and for %s \n", fileName1, fileName2, sensitiveOutput, letterOutput);
 	// print the number of Characters that were in the individual files
-	printf("File sizes: %d characters \n", allCounter);
+	printf("\tFile sizes: %d characters \n", allCounter);
 	// print the percentage of mismatched Characters in the files to two decimal places
-	printf("Mismatches: %.2f \n", mismatchPercentage);
+	printf("\tMismatches: %.2f%% \n", mismatchPercentage);
 	// print the percentage of Characters not tested in the files to two decimal places
-	printf("Not tested: %.2f \n", notTestedPercentage);
+	printf("\tNot tested: %.2f%% \n", notTestedPercentage);
 
 
 	return 0;
@@ -222,7 +240,8 @@ Output of comparing file2a.txt and file2b.txt:
 Case sensitive? (Y/N) y
 Compare letters only? (Y/N) y
 
-File sizes: 729 characters
-Mismatches: 5.35
-Not tested: 23.32
+Comparing file2a.txt to file2b.txt testing for case sensitivity and for letters only
+		File sizes: 729 characters
+		Mismatches: 5.35%
+		Not tested: 23.32%
 */
