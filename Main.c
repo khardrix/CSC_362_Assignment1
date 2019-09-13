@@ -241,6 +241,7 @@ int main() {
 	printf("\tNot tested: %.2f%% \n", notTestedPercentage);
 
 
+	// return 0 to indicate the program finished without any errors
 	return 0;
 }
 
