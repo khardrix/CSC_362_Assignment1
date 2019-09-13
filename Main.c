@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main() {
-	/* ----------------------------------- VARIABLE DECLARATIONS ----------------------------------- */
+	/* --------------------------------------- VARIABLE DECLARATIONS ---------------------------------------- */
 	// Character Array variables to store the file names
 	char fileName1[102] = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file1a.txt";
 	char fileName2[104] = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file1b-2.txt";
@@ -32,57 +32,107 @@ int main() {
 	int loop = 1;
 	int caseQuestion = 1;
 	int lettersQuestion = 1;
-	/* ------------------------------- END OF VARIABLE DECLARATIONS -------------------------------- */
+	/* ----------------------------------- END OF VARIABLE DECLARATIONS ------------------------------------- */
 
+	// opening the files in read mode and assigning them to the file pointer variables
 	fileInput1 = fopen(("%c", fileName1), "r");
 	fileInput2 = fopen(("%c", fileName2), "r");
 
+	/* ---------------------------------- WHILE LOOP TO VALIDATE USER INPUT --------------------------------- */
+	// while loop will loop until the user inputs 'Y', 'y', 'N' or 'n'. Once that happens, 
+		// the int caseQuestion variable will be set to 0, which will cause the while condition to 
+		// fail and the while loop will be exited
 	while (caseQuestion == 1) {
+		// ask user if they want the testing of the files to be case sensitive (only applies to letters)
 		printf("Case sensitive? (Y/N): ");
+		// account for new line characters and white space and get user input to the above question 
+			// and assign that Character value to the char sensitive variable
 		scanf(" %c", &sensitive);
 
+		// if statement to check if the user input was equal to 'y' or 'Y'
 		if (sensitive == 'y' || sensitive == 'Y') {
+			// set caseQuestion to 0 to exit the while loop and set the Character variable isSensitive to 'y'
 			caseQuestion = 0;
 			isSensitive = 'y';
 		}
+		// else if statement to check if the user input was to 'n' or 'N'
 		else if (sensitive == 'N' || sensitive == 'n') {
+			// set caseQuestion to 0 to exit the while loop and set the Character variable isSensitive to 'n'
 			caseQuestion = 0;
 			isSensitive = 'n';
 		}
 	}
+	/* ------------------------------ END OF WHILE LOOP TO VALIDATE USER INPUT ------------------------------ */
 
+
+	// print user answer to whether they want testing to be case sensitive
 	printf("Case sensitive: %c\n", sensitive);
 
+
+	/* ---------------------------------- WHILE LOOP TO VALIDATE USER INPUT --------------------------------- */
+	// while loop will loop until the user inputs 'Y', 'y', 'N' or 'n'. Once that happens, 
+		// the int caseQuestion variable will be set to 0, which will cause the while condition to 
+		// fail and the while loop will be exited
 	while (lettersQuestion == 1) {
+		// ask the question if they want the testing and comparison of the files to 
+			// be comparing letters only and assign th
 		printf("Compare letters only? (Y/N): ");
+		// account for new line characters and white space and get user input to the above question 
+			// and assign that Character value to the char onlyLetters variable
 		scanf(" %c", &onlyLetters);
 
+		// if statement to check if the user input was equal to 'y' or 'Y'
 		if (onlyLetters == 'y' || onlyLetters == 'Y') {
+			// set lettersQuestion to 0 to exit the while loop and set the Character variable isOnlyLetters to 'y'
 			lettersQuestion = 0;
 			isOnlyLetters = 'y';
 		}
+		// else if statement to check if the user input was equal to 'n' or 'N'
 		else if (onlyLetters == 'N' || onlyLetters == 'n') {
+			// set lettersQuestion to 0 to exit the while loop and set the Character variable isOnlyLetters to 'n'
 			lettersQuestion = 0;
 			isOnlyLetters = 'n';
 		}
 	}
+	/* ------------------------------ END OF WHILE LOOP TO VALIDATE USER INPUT ------------------------------ */
 
+
+	// print user answer to whether they want testing to include only letters
 	printf("Letters only: %c\n", onlyLetters);
 
+
+	// if statement to check if the file pointer variable fileInput1 is equal to NULL
 	if (fileInput1 == NULL) {
+		// print to the terminal that the file could not be found
 		printf("Could not find file");
+		// return 1 to indicate that an error has occured
 		return 1;
 	}
 
+	// if statement to check if the file pointer variable fileInput2 is equal to NULL
 	if (fileInput2 == NULL) {
+		// print to the terminal that the file could not be found
 		printf("Could not find file 2");
+		// return 1 to indicate that an error has occured
 		return 1;
 	}
 
+	/* ------------------------------ WHILE LOOP TO LOOP THROUGH FILE UNTIL EOF ----------------------------- */
+	// infinite while loop that will only exit when the EOF (End Of File) 
+		// of the first file is reached
 	while (1) {
+		// get the current Character (initially starts with the top left (first) character) from 
+			// the first file that has the file pointer variable name of fileInput1. With every
+			// iteration of the while loop, the current Character will advance to the next
+			// Character in the file (moving just like if a human was reading the file)
 		readC1 = fgetc(fileInput1);
+		// get the current Character (initially starts with the top left (first) character) from 
+			// the second file that has the file pointer variable name of fileInput2. With every
+			// iteration of the while loop, the current Character will advance to the next
+			// Character in the file (moving just like if a human was reading the file)
 		readC2 = fgetc(fileInput2);
 
+		/* ----- TESTING FOR MATCHES, MISMATCHES AND NOT TESTED BASED UPON USER DEFINED TEST CONDITIONS ----- */
 		if (isOnlyLetters == 'y') {
 			if ((readC1 < 65) || (readC1 > 122) || ((readC1 > 90) && (readC1 < 97))) {
 				if ( ((readC2 >= 65) && (readC2 <= 90)) || ((readC2 >= 97) && (readC2 <= 122)) ) {
@@ -140,6 +190,8 @@ int main() {
 				// continue;
 			}
 		}
+		/* -- END OF TESTING FOR MATCHES, MISMATCHES AND NOT TESTED BASED UPON USER DEFINED TEST CONDITIONS - */
+
 
 		if (readC1 == EOF) {
 			// loop = 0;
@@ -150,6 +202,8 @@ int main() {
 			printf("%c", readC2);
 		}
 	}
+	/* --------------------------- END OF WHILE LOOP TO LOOP THROUGH FILE UNTIL EOF ------------------------- */
+
 
 	fclose(fileInput1);
 	fclose(fileInput2);
