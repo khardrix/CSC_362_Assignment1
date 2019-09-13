@@ -191,6 +191,15 @@ int main() {
 			// store "letters and characters" for use in final output in the Character Pointer variable letterOutput
 			letterOutput = "letters and characters";
 
+			if (sensitive == 'y' || sensitive == 'Y') {
+				// store "sensitivity" for use in final output in the Character Pointer variable sensitiveOutput
+				sensitiveOutput = "sensitivity";
+			}
+			else {
+				// store "insensitivity" for use in final output in the Character Pointer variable sensitiveOutput
+				sensitiveOutput = "insensitivity";
+			}
+
 			// if statement that checks if the Character variables readC1 and readC2 are the same
 			if (readC1 == readC2) {
 				// increment the sameCounter variable
@@ -244,4 +253,13 @@ Comparing file2a.txt to file2b.txt testing for case sensitivity and for letters 
 		File sizes: 729 characters
 		Mismatches: 5.35%
 		Not tested: 23.32%
+
+
+Case sensitive? (Y/N) n
+Compare letters only? (Y/N) n
+
+Comparing file2a.txt to file2b.txt testing for case insensitivity and for letters and characters
+		File sizes: 729 characters
+		Mismatches: 7.27%
+		Not tested: 0.00%
 */
