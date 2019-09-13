@@ -1,12 +1,37 @@
+/******************************************************************************************************************
+ ******************************************************************************************************************
+ *****     Class: CSC-362-001                       Professor: Fox                 Student: Ryan Huffman      *****                                                          
+ *****________________________________________________________________________________________________________*****                                                                                                     
+ *****                               Programming Assignment #1: Compare Two Files                             *****                                                         
+ *****--------------------------------------------------------------------------------------------------------*****                                                                                                     
+ *****                           Program that compares two files using file pointers.                         *****                                                
+ *****                    The program then asks the user if they want to compare only letters                 *****                                                           
+ *****                       and if the user wants letter comparisons to be case sensitive.                   *****                                                           
+ *****                                                                                                        *****
+ *****                       The program then loops through the files counting Characters,                    *****                                                        
+ *****                           how many were mismatched and how many were not tested                        *****                                                 
+ *****                               according to the conditions the user defined.                            *****                                        
+ *****                                                                                                        *****
+ *****                         The program compares respective Characters from each file                      *****                                                       
+ *****                              one at a time according to how the user wants.                            *****                                            
+ *****                                                                                                        *****
+ *****                        At the end of the program, the program prints to the terminal                   *****                                                            
+ *****                                the user reponses to the two questions asked,                           *****                                            
+ *****                           the number of total characters in the individual files,                      *****                                                    
+ *****            the percentage of mismatches between the files according to the user defined conditions     *****                                                                              
+ *****        and the percentage of Characters that were not tested according to the user defined conditions. *****
+ ******************************************************************************************************************
+ ******************************************************************************************************************/
 #define _CRT_SECURE_NO_DEPRECATE
 #include <stdio.h>
+#include <ctype.h>
 
 int main() {
 	/* --------------------------------------- VARIABLE DECLARATIONS ---------------------------------------- */
 	// Character Array variables to store the file names
-	char fileName1[102] = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file1a.txt";
-	char fileName2[104] = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file1b-2.txt";
-
+	char* fileName1 = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file2a.txt";
+	char* fileName2 = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file2b.txt";
+	
 	// File Pointer variables 
 	FILE* fileInput1;
 	FILE* fileInput2;
@@ -18,87 +43,36 @@ int main() {
 	// Character variables to store the user's answers to questions on case sensitivity and letters only
 	char sensitive;
 	char onlyLetters;
-	char isSensitive;
-	char isOnlyLetters;
 
-	// float counter variables
-	float same = 0;
-	float all = 0;
-	float mismatches = 0;
-	float notTested = 0;
-	float sameResult, mismatchResult, notTestResult;
+	// int counter variables
+	int sameCounter = 0;
+	int allCounter = 0;
+	int mismatchCounter = 0;
+	int notTestedCounter = 0;
 
-	// int variables to use with while loops
-	int loop = 1;
-	int caseQuestion = 1;
-	int lettersQuestion = 1;
+	// float variables to store the percentage results
+	float samePercentage, mismatchPercentage, notTestedPercentage;
 	/* ----------------------------------- END OF VARIABLE DECLARATIONS ------------------------------------- */
+
 
 	// opening the files in read mode and assigning them to the file pointer variables
 	fileInput1 = fopen(("%c", fileName1), "r");
 	fileInput2 = fopen(("%c", fileName2), "r");
 
-	/* ---------------------------------- WHILE LOOP TO VALIDATE USER INPUT --------------------------------- */
-	// while loop will loop until the user inputs 'Y', 'y', 'N' or 'n'. Once that happens, 
-		// the int caseQuestion variable will be set to 0, which will cause the while condition to 
-		// fail and the while loop will be exited
-	while (caseQuestion == 1) {
-		// ask user if they want the testing of the files to be case sensitive (only applies to letters)
-		printf("Case sensitive? (Y/N): ");
-		// account for new line characters and white space and get user input to the above question 
-			// and assign that Character value to the char sensitive variable
-		scanf(" %c", &sensitive);
 
-		// if statement to check if the user input was equal to 'y' or 'Y'
-		if (sensitive == 'y' || sensitive == 'Y') {
-			// set caseQuestion to 0 to exit the while loop and set the Character variable isSensitive to 'y'
-			caseQuestion = 0;
-			isSensitive = 'y';
-		}
-		// else if statement to check if the user input was to 'n' or 'N'
-		else if (sensitive == 'N' || sensitive == 'n') {
-			// set caseQuestion to 0 to exit the while loop and set the Character variable isSensitive to 'n'
-			caseQuestion = 0;
-			isSensitive = 'n';
-		}
-	}
-	/* ------------------------------ END OF WHILE LOOP TO VALIDATE USER INPUT ------------------------------ */
+	// ask user if they want the testing of the files to be case sensitive (only applies to letters)
+	printf("Case sensitive? (Y/N): ");
+	// account for new line characters and white space and get user input to the above question 
+		// and assign that Character value to the char sensitive variable
+	scanf(" %c", &sensitive);
 
 
-	// print user answer to whether they want testing to be case sensitive
-	printf("Case sensitive: %c\n", sensitive);
-
-
-	/* ---------------------------------- WHILE LOOP TO VALIDATE USER INPUT --------------------------------- */
-	// while loop will loop until the user inputs 'Y', 'y', 'N' or 'n'. Once that happens, 
-		// the int caseQuestion variable will be set to 0, which will cause the while condition to 
-		// fail and the while loop will be exited
-	while (lettersQuestion == 1) {
-		// ask the question if they want the testing and comparison of the files to 
-			// be comparing letters only and assign th
-		printf("Compare letters only? (Y/N): ");
-		// account for new line characters and white space and get user input to the above question 
-			// and assign that Character value to the char onlyLetters variable
-		scanf(" %c", &onlyLetters);
-
-		// if statement to check if the user input was equal to 'y' or 'Y'
-		if (onlyLetters == 'y' || onlyLetters == 'Y') {
-			// set lettersQuestion to 0 to exit the while loop and set the Character variable isOnlyLetters to 'y'
-			lettersQuestion = 0;
-			isOnlyLetters = 'y';
-		}
-		// else if statement to check if the user input was equal to 'n' or 'N'
-		else if (onlyLetters == 'N' || onlyLetters == 'n') {
-			// set lettersQuestion to 0 to exit the while loop and set the Character variable isOnlyLetters to 'n'
-			lettersQuestion = 0;
-			isOnlyLetters = 'n';
-		}
-	}
-	/* ------------------------------ END OF WHILE LOOP TO VALIDATE USER INPUT ------------------------------ */
-
-
-	// print user answer to whether they want testing to include only letters
-	printf("Letters only: %c\n", onlyLetters);
+	// ask the question if they want the testing and comparison of the files to 
+		// be comparing letters only and assign th
+	printf("Compare letters only? (Y/N): ");
+	// account for new line characters and white space and get user input to the above question 
+		// and assign that Character value to the char onlyLetters variable
+	scanf(" %c", &onlyLetters);
 
 
 	// if statement to check if the file pointer variable fileInput1 is equal to NULL
@@ -109,6 +83,7 @@ int main() {
 		return 1;
 	}
 
+
 	// if statement to check if the file pointer variable fileInput2 is equal to NULL
 	if (fileInput2 == NULL) {
 		// print to the terminal that the file could not be found
@@ -117,10 +92,11 @@ int main() {
 		return 1;
 	}
 
+
 	/* ------------------------------ WHILE LOOP TO LOOP THROUGH FILE UNTIL EOF ----------------------------- */
 	// infinite while loop that will only exit when the EOF (End Of File) 
 		// of the first file is reached
-	while (1) {
+	while ( !feof(fileInput1) ) {
 		// get the current Character (initially starts with the top left (first) character) from 
 			// the first file that has the file pointer variable name of fileInput1. With every
 			// iteration of the while loop, the current Character will advance to the next
@@ -132,250 +108,120 @@ int main() {
 			// Character in the file (moving just like if a human was reading the file)
 		readC2 = fgetc(fileInput2);
 
+
+		// increments every time a character is inspected
+		allCounter++;
+
+
 		/* ----- TESTING FOR MATCHES, MISMATCHES AND NOT TESTED BASED UPON USER DEFINED TEST CONDITIONS ----- */
-		if (isOnlyLetters == 'y') {
-			if ((readC1 < 65) || (readC1 > 122) || ((readC1 > 90) && (readC1 < 97))) {
-				if ( ((readC2 >= 65) && (readC2 <= 90)) || ((readC2 >= 97) && (readC2 <= 122)) ) {
-					all++;
-					notTested++;
-					// continue;
-				}
-				else {
-					all++;
-					mismatches++;
-					// continue;
-				}
+		// if statement that checks if the user wants to check only letters
+		if (onlyLetters == 'y' || onlyLetters == 'Y') {
+			// if statement that checks if the Charcter variable readC1 is not an alphabetical Character
+			if (isalpha(readC1) == 0) {
+				// increment the notTestedCounter variable
+				notTestedCounter++;
 			}
-			else if ( ((readC2 >= 65) && (readC2 <= 90)) || ((readC2 >= 97) && (readC2 <= 122)) ) {
-				all++;
-				mismatches++;
-				// continue;
-			}
+			// else statement that executes if the Character variable readC1 is an alphabetical Character
 			else {
-				if (isSensitive == 'y') {
-					if (readC1 == readC2) {
-						all++;
-						same++;
-						// continue;
+				// if statement that checks if the user wants the alphabetical comparisons to be case sensitive
+				if (sensitive == 'y' || sensitive == 'Y') {
+					// if statement that checks if the Characters variable readC1 is lowercase and
+						// the Character variable readC2 is uppercase
+					if ( ((isupper(readC1) == 0) && (isupper(readC2) != 0)) ) {
+						// increment the mismatchCounter variable
+						mismatchCounter++;
 					}
+					// else if statement that checks if the Characters variable readC1 is uppercase and
+						// the Character variable readC2 is lowercase
+					else if (((isupper(readC1) != 0) && (isupper(readC2) == 0))) {
+						// increment mismatchCounter variable
+						mismatchCounter++;
+					}
+					// else statement that executes if the alphabetical Character variables readC1 and 
+						// readC2 have matching cases (upper or lower)
 					else {
-						all++;
-						mismatches++;
-						// continue;
+						// if statement that checks if the Character variables readC1 and readC2
+							// are the same
+						if (readC1 == readC2) {
+							// increment the sameCounter variable
+							sameCounter++;
+						}
+						// else statement that executes if the Character variables readC1 and
+							// readC2 are different
+						else {
+							// increment the mismatchCounter variable
+							mismatchCounter++;
+						}
 					}
 				}
+				// else statement that executes on alphabetical Character variables readC1 and
+					// readC2 if their case (upper or lower) does not matter 
 				else {
-					if ((readC1 == (readC2 - 32)) || (readC1 == (readC2 + 32))) {
-						all++;
-						same++;
-						// continue;
+					// if statement that converts the Character variables readC1 and readC2 to
+						// lowercase and then compares them to see if they are the same
+					if (tolower(readC1) == tolower(readC2)) {
+						// increment the sameCounter variable
+						sameCounter++;
 					}
+					// else statement that executes if the Character variables readC1 and
+						// readC2 are different letters
 					else {
-						all++;
-						mismatches++;
-						// continue;
+						// increment the mismatchCounter variable
+						mismatchCounter++;
 					}
 				}
 			}
 		}
+		// else statement that executes if Characters that are not alphabetical are going to be compared
 		else {
+			// if statement that checks if the Character variables readC1 and readC2 are the same
 			if (readC1 == readC2) {
-				all++;
-				same++;
-				// continue;
+				// increment the sameCounter variable
+				sameCounter++;
 			}
+			// else statement that executes if the Character variables readC1 and readC2 are different
 			else {
-				all++;
-				mismatches++;
-				// continue;
+				// increment the mismatchCounter variable
+				mismatchCounter++;
 			}
 		}
 		/* -- END OF TESTING FOR MATCHES, MISMATCHES AND NOT TESTED BASED UPON USER DEFINED TEST CONDITIONS - */
-
-
-		if (readC1 == EOF) {
-			// loop = 0;
-			break;
-		}
-		else {
-			printf("%c", readC1);
-			printf("%c", readC2);
-		}
 	}
 	/* --------------------------- END OF WHILE LOOP TO LOOP THROUGH FILE UNTIL EOF ------------------------- */
 
 
+	// close both files
 	fclose(fileInput1);
 	fclose(fileInput2);
 
-	sameResult = ((same / all) * 100);
-	mismatchResult = ((mismatches / all) * 100);
-	notTestResult = ((notTested / all) * 100);
 
-	printf("File sizes: %d characters \n", all);
-	printf("Mismatches: %.2f \n", mismatchResult);
-	printf("Not tested: %.2f \n", notTestResult);
+	// compute the percentage values of the Characters that were the same, a mismatch and not tested
+	samePercentage = (((float)sameCounter) / allCounter) * 100;
+	mismatchPercentage = (((float)mismatchCounter) / allCounter) * 100;
+	notTestedPercentage = (((float)notTestedCounter) / allCounter) * 100;
 
-	printf("Same %d\nAll %d", same, all);
+
+	// print whether the user wanted alphabetical comparisons to be case sensitive
+	printf("\n\n\n\nCase sensitive? (Y/N) %c\n", sensitive);
+	// print whether the user wanted to compare letters only
+	printf("Compare letters only? (Y/N) %c\n\n", onlyLetters);
+	// print the number of Characters that were in the individual files
+	printf("File sizes: %d characters \n", allCounter);
+	// print the percentage of mismatched Characters in the files to two decimal places
+	printf("Mismatches: %.2f \n", mismatchPercentage);
+	// print the percentage of Characters not tested in the files to two decimal places
+	printf("Not tested: %.2f \n", notTestedPercentage);
+
 
 	return 0;
 }
 
 /*
-1) declare variables - inside main() (all code inside main)
+Output of comparing file2a.txt and file2b.txt:
+Case sensitive? (Y/N) y
+Compare letters only? (Y/N) y
+
+File sizes: 729 characters
+Mismatches: 5.35
+Not tested: 23.32
 */
-
-/*
-2.) ask user questions
-*/
-
-/*
-3.) open files - "fopen, fclose, fgetc" - google "ansi c file io" look for "f"-something,
-all caps with *. File* = file pointer. only c use file pointer
-*/
-
-/*
-4.) Loop through files until eof
-	/*
-	5.) next 4 comments inside loop
-
-	6.) read next character
-
-	7.) check for eof
-
-	8,) compare characters
-
-	9.) increment counter (characters matched or didn't match)
-	*/
-	/*
-	*/
-
-
-
-	/*
-	after loop
-	*/
-
-	/*
-	10.) close the file
-	*/
-
-	/*
-	11.) compute values (files, mismatches, not tested)
-	*/
-
-	/*
-	12.) print results
-	*/
-
-	/*
-	First, just open two files, loop through them until eof. counting the characters and printing the results.
-	declare 2 file pointers, integer counter and two character variables to hold the current character.
-	File pointer 1
-	File pointer 2
-	number of chars read
-	*/
-
-	/*
-	scan f
-	*/
-
-	/*
-	*/
-
-	/*
-	#include <stdio.h>
-	int main()
-	{
-		 /* Pointer to the file */
-		 // FILE* fp1;
-
-		 /* Character variable to read the content of file */
-		 // char c;
-
-		 /* Opening a file in r mode*/
-		 // fp1 = fopen("C:\\myfiles\\newfile.txt", "r");
-
-		 /* Infinite loop –I have used break to come out of the loop*/
-		 // while (1)
-		 // {
-			 // c = fgetc(fp1);
-			 // if (c == EOF)
-				 // break;
-			 // else
-				 // printf("%c", c);
-		 // }
-		 // fclose(fp1);
-		 // return 0;
-		 // }
-		 /**/
-
-
-/*
-		if ( ((isSensitive == 'y') && (isOnlyLetters == 'y')) ) {
-			if ( (readC1 < 65) || (readC1 > 122) || ((readC1 > 90) && (readC1 < 97)) ) {
-				if ( ((readC2 >= 65) && (readC2 <= 90)) || ((readC2 >= 97) && (readC2 <= 122)) ) {
-					all++;
-					mismatches++;
-					continue;
-				}
-				else {
-					all++;
-					notTested++;
-					continue;
-				}
-			}
-			else if ( (readC2 < 65) || (readC2 > 122) || ((readC2 > 90) && (readC2 < 97)) ) {
-				if ( ((readC1 >= 65) && (readC1 <= 90)) || ((readC1 >= 97) && (readC1 <= 122)) ) {
-					all++;
-					mismatches++;
-					continue;
-				}
-				else {
-					all++;
-					notTested++;
-					continue;
-				}
-			}
-			else {
-				if ( readC1 == readC2 ) {
-					all++;
-					same++;
-					continue;
-				}
-				else {
-					all++;
-					mismatches++;
-					continue;
-				}
-			}
-		}
-		else if ( ((isSensitive == 'y') && (isOnlyLetters == 'n')) ) {
-			if (readC1 == readC2) {
-				all++;
-				same++;
-				continue;
-			}
-			else {
-				all++;
-				mismatches++;
-				continue;
-			}
-		}
-		else if ( ((isSensitive == 'n') && (isOnlyLetters == 'y')) ) {
-			if ( (readC1 < 65) || (readC1 > 122) || ((readC1 > 90) && (readC1 < 97)) ) {
-				if ((readC2 < 65) || (readC2 > 122) || ((readC2 > 90) && (readC2 < 97))) {
-
-				}
-			}
-		}
-
-
-		if (readC1 == readC2) {
-			same++;
-			all++;
-		}
-		else {
-			all++;
-		}
-		*/
