@@ -1,3 +1,7 @@
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
+#include <ctype.h>
+
 /******************************************************************************************************************
  ******************************************************************************************************************
  *****     Class: CSC-362-001                       Professor: Fox                 Student: Ryan Huffman      *****                                                          
@@ -22,15 +26,12 @@
  *****        and the percentage of Characters that were not tested according to the user defined conditions. *****
  ******************************************************************************************************************
  ******************************************************************************************************************/
-#define _CRT_SECURE_NO_DEPRECATE
-#include <stdio.h>
-#include <ctype.h>
 
 int main() {
 	/* --------------------------------------- VARIABLE DECLARATIONS ---------------------------------------- */
 	// Character Array variables to store the file names
-	char* fileName1 = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file2a.txt";
-	char* fileName2 = "C:\\Users\\user\\Desktop\\NKU\\Fall 2019\\Computer Systems\\Programming Assignments\\Assignment #1\\file2b.txt";
+	char* fileName1 = "file2a.txt";
+	char* fileName2 = "file2b.txt";
 	
 	// File Pointer variables 
 	FILE* fileInput1;
